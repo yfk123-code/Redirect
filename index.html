@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Premium Content - Simple & Secure</title>
+    <meta name="description" content="Premium content access with minimal verification. Clean, fast, secure.">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1d1d1f;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        /* Clean Header */
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            background: linear-gradient(90deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #1d1d1f, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 21px;
+            color: #86868b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Verification Card */
+        .verification-card {
+            background: #f5f5f7;
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 600px;
+            margin: 40px auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #d2d2d7;
+            z-index: 0;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid #d2d2d7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: #007AFF;
+            border-color: #007AFF;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step.completed {
+            background: #34C759;
+            border-color: #34C759;
+            color: white;
+        }
+
+        /* Timer */
+        .timer-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .timer-circle {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timer-svg {
+            transform: rotate(-90deg);
+        }
+
+        .timer-circle-bg {
+            fill: none;
+            stroke: #f5f5f7;
+            stroke-width: 8;
+        }
+
+        .timer-circle-progress {
+            fill: none;
+            stroke: #007AFF;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        .timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        /* Button */
+        .btn {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 17px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            margin: 30px auto;
+        }
+
+        .btn:hover {
+            background: #0051D5;
+            transform: scale(1.02);
+        }
+
+        .btn.active {
+            display: block;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .feature-card {
+            padding: 40px;
+            background: #f5f5f7;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #86868b;
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        /* Stats */
+        .stats {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            border-radius: 20px;
+            padding: 60px;
+            color: white;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item h3 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 17px;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f5f5f7;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer p {
+            color: #86868b;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .verification-card {
+                padding: 40px 20px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Premium Access</div>
+            <div style="color: #86868b; font-size: 14px;">Secure Verification</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Welcome to Premium</h1>
+            <p>Access exclusive content with our simple three-step verification process.</p>
+        </div>
+
+        <div class="verification-card">
+            <div class="progress-steps">
+                <div class="step active" id="step1">1</div>
+                <div class="step" id="step2">2</div>
+                <div class="step" id="step3">3</div>
+            </div>
+
+            <div class="timer-container">
+                <div class="timer-circle">
+                    <svg class="timer-svg" width="160" height="160">
+                        <circle class="timer-circle-bg" cx="80" cy="80" r="70"></circle>
+                        <circle class="timer-circle-progress" id="timerProgress" 
+                                cx="80" cy="80" r="70"
+                                stroke-dasharray="440"
+                                stroke-dashoffset="440"></circle>
+                    </svg>
+                    <div class="timer-text" id="timer">15</div>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: #86868b; font-size: 17px; margin: 20px 0;">
+                Please wait while we prepare your access...
+            </p>
+
+            <button class="btn" id="continueBtn" onclick="handleContinue()">
+                Continue
+            </button>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Lightning Fast</h3>
+                <p>Experience incredible download speeds with our optimized CDN network.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Your data is encrypted and protected with industry-standard security.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">♾️</div>
+                <h3>Unlimited Access</h3>
+                <p>No restrictions, no limits. Access everything in our premium library.</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <h2 style="font-size: 36px; margin-bottom: 20px;">Trusted by Millions</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>10M+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50K+</h3>
+                    <p>Premium Content</p>
+                </div>
+                <div class="stat-item">
+                    <h3>99.9%</h3>
+                    <p>Uptime</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Support</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 Premium Access. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let timeLeft = 15;
+        let currentStep = 1;
+        const totalSteps = 3;
+        const circumference = 2 * Math.PI * 70;
+
+        function startTimer() {
+            timeLeft = 15;
+            const timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                const progress = (15 - timeLeft) / 15;
+                const offset = circumference - (progress * circumference);
+                document.getElementById('timerProgress').style.strokeDashoffset = offset;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').textContent = '✓';
+                    document.getElementById('continueBtn').classList.add('active');
+                    
+                    // Auto scroll
+                    smoothScroll();
+                }
+            }, 1000);
+        }
+
+        function smoothScroll() {
+            const scrollHeight = document.body.scrollHeight - window.innerHeight;
+            const duration = 3000;
+            const start = window.pageYOffset;
+            const startTime = performance.now();
+            
+            function scroll() {
+                const now = performance.now();
+                const time = Math.min(1, (now - startTime) / duration);
+                const timeFunction = time * (2 - time);
+                window.scrollTo(0, Math.ceil(timeFunction * scrollHeight));
+                
+                if (time < 1) {
+                    requestAnimationFrame(scroll);
+                }
+            }
+            
+            requestAnimationFrame(scroll);
+        }
+
+        function handleContinue() {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.add('completed');
+            
+            currentStep++;
+            
+            if (currentStep <= totalSteps) {
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                document.getElementById('continueBtn').classList.remove('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => startTimer(), 1000);
+            } else {
+                const urlParams = new URLSearchParams(window.location.search);
+                window.location.href = urlParams.get('url') || 'https://example.com';
+            }
+        }
+
+        window.onload = () => startTimer();
+    </script>
+</body>
+</html>
